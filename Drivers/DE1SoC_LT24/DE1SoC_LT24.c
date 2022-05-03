@@ -1,7 +1,7 @@
 
 #include "DE1SoC_LT24.h"
-#include "../HPS_Watchdog/HPS_Watchdog.h"
-#include "../HPS_usleep/HPS_usleep.h" //some useful delay routines
+#include "HPS_Watchdog/HPS_Watchdog.h"
+#include "HPS_usleep/HPS_usleep.h" //some useful delay routines
 
 //
 // Driver global static variables (visible only to this .c file)
@@ -443,7 +443,7 @@ signed int LT24_testPattern(){
 
 //Copy frame buffer to display
 // - returns 0 if successful
-signed int LT24_copyFrameBuffer(const unsigned short* framebuffer, unsigned int xleft, unsigned int ytop, unsigned int width, unsigned int height)
+signed int LT24_copyFrameBuffer(const unsigned char* framebuffer, unsigned int xleft, unsigned int ytop, unsigned int width, unsigned int height)
 {
     unsigned int cnt;
     //Define Window
@@ -466,5 +466,50 @@ signed int LT24_drawPixel(unsigned short colour,unsigned int x,unsigned int y)
     if (status != LT24_SUCCESS) return status;   //Check for any errors
     LT24_write(true, colour);                    //Write one pixel of colour data
     return LT24_SUCCESS;                         //And Done
+}
+
+signed int LT24_Coverdisplay(const unsigned char* framebuffer)
+{
+    unsigned int cnt;
+    //Define Window
+    signed int status = LT24_setWindow(0,0,240,320);
+    if (status != LT24_SUCCESS) return status;
+    //And Copy
+    cnt = (240 * 320); //How many pixels.
+    while (cnt--) {
+        LT24_write(true, *framebuffer++);
+    }
+    //Done
+    return LT24_SUCCESS;
+}
+
+signed int LT24_Videodisplay(const unsigned char* framebuffer)
+{
+    unsigned int cnt;
+    //Define Window
+    signed int status = LT24_setWindow(0,0,240,320);
+    if (status != LT24_SUCCESS) return status;
+    //And Copy
+    cnt = (240 * 320); //How many pixels.
+    while (cnt--) {
+        LT24_write(true, *framebuffer++);
+    }
+    //Done
+    return LT24_SUCCESS;
+}
+
+signed int LT24_Initdisplay(const unsigned char* framebuffer)
+{
+    unsigned int cnt;
+    //Define Window
+    signed int status = LT24_setWindow(0,0,240,320);
+    if (status != LT24_SUCCESS) return status;
+    //And Copy
+    cnt = (240 * 320); //How many pixels.
+    while (cnt--) {
+        LT24_write(true, *framebuffer++);
+    }
+    //Done
+    return LT24_SUCCESS;
 }
 

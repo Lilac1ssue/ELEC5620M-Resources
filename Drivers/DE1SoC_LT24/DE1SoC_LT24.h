@@ -76,12 +76,17 @@ signed int LT24_testPattern( void );
 
 //Copy frame buffer to display
 // - returns 0 if successful
-signed int LT24_copyFrameBuffer(const unsigned short* framebuffer, unsigned int xleft, unsigned int ytop, unsigned int width, unsigned int height);
+signed int LT24_copyFrameBuffer(const unsigned char* framebuffer, unsigned int xleft, unsigned int ytop, unsigned int width, unsigned int height);
 
 //Plot a single pixel on the LT24 display
 // - returns 0 if successful
 signed int LT24_drawPixel(unsigned short colour,unsigned int x,unsigned int y);
 
+signed int LT24_Coverdisplay(const unsigned char* framebuffer);
+
+signed int LT24_Videodisplay(const unsigned char* framebuffer);
+
+signed int LT24_Initdisplay(const unsigned char* framebuffer);
 
 #endif /*DE1SoC_LT24_H_*/
 
