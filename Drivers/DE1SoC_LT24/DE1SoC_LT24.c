@@ -468,48 +468,39 @@ signed int LT24_drawPixel(unsigned short colour,unsigned int x,unsigned int y)
     return LT24_SUCCESS;                         //And Done
 }
 
-signed int LT24_Coverdisplay(const unsigned char* framebuffer)
+/*
+ *The original reason for creating follow functions is that whenever an interrupt function is applied
+ *in project, variables and functions within the interrupt function usually cannot be called in the
+ *the main function, otherwise the program will freeze (in the form of the private timer not working).
+ *After this problem is resolved (see my report), the function names remain in the main function to
+ *make the code easier to read.  -jiedi -2022/5/5
+ */
+
+void LT24_FullScreen(const unsigned char* frames)//Used to play full-screen frames
 {
-    unsigned int cnt;
-    //Define Window
-    signed int status = LT24_setWindow(0,0,240,320);
-    if (status != LT24_SUCCESS) return status;
-    //And Copy
-    cnt = (240 * 320); //How many pixels.
-    while (cnt--) {
-        LT24_write(true, *framebuffer++);
-    }
-    //Done
-    return LT24_SUCCESS;
+    unsigned int cnt=76800; //How many pixels.
+    signed int status = LT24_setWindow(0,0,240,320);//Define Window
+    while (cnt--) {LT24_write(true, *frames++);}//Render frames
 }
 
-signed int LT24_Videodisplay(const unsigned char* framebuffer)
+void LT24_VolUIdisplay(const unsigned char* frames)//Display volume UI
 {
-    unsigned int cnt;
-    //Define Window
-    signed int status = LT24_setWindow(0,0,240,320);
-    if (status != LT24_SUCCESS) return status;
-    //And Copy
-    cnt = (240 * 320); //How many pixels.
-    while (cnt--) {
-        LT24_write(true, *framebuffer++);
-    }
-    //Done
-    return LT24_SUCCESS;
+    unsigned int cnt=2304;//How many pixels.
+    signed int status = LT24_setWindow(0,0,36,64);    //Define Window
+    while (cnt--) {LT24_write(true, *frames++);}
 }
 
-signed int LT24_Initdisplay(const unsigned char* framebuffer)
+void LT24_CutUIdisplay(const unsigned char* frames)//Display Songs choice UI
 {
-    unsigned int cnt;
-    //Define Window
-    signed int status = LT24_setWindow(0,0,240,320);
-    if (status != LT24_SUCCESS) return status;
-    //And Copy
-    cnt = (240 * 320); //How many pixels.
-    while (cnt--) {
-        LT24_write(true, *framebuffer++);
-    }
-    //Done
-    return LT24_SUCCESS;
+    unsigned int cnt=5376;//How many pixels.
+    signed int status = LT24_setWindow(0,128,28,192);    //Define Window
+    while (cnt--) {LT24_write(true, *frames++);}
+}
+
+void LT24_PauseDisplay(const unsigned char* frames)//Display Video pause icon
+{
+    unsigned int cnt=11520;//How many pixels.
+    signed int status = LT24_setWindow(204,0,36,320);    //Define Window
+    while (cnt--) {LT24_write(true, *frames++);}
 }
 

@@ -82,11 +82,13 @@ signed int LT24_copyFrameBuffer(const unsigned char* framebuffer, unsigned int x
 // - returns 0 if successful
 signed int LT24_drawPixel(unsigned short colour,unsigned int x,unsigned int y);
 
-signed int LT24_Coverdisplay(const unsigned char* framebuffer);
+void LT24_FullScreen(const unsigned char* frames);
 
-signed int LT24_Videodisplay(const unsigned char* framebuffer);
+void LT24_VolUIdisplay(const unsigned char* frames);
 
-signed int LT24_Initdisplay(const unsigned char* framebuffer);
+void LT24_CutUIdisplay(const unsigned char* frames);
+
+void LT24_PauseDisplay(const unsigned char* frames);
 
 #endif /*DE1SoC_LT24_H_*/
 
